@@ -71,6 +71,14 @@ def _klien_admin():
     return create_client(url, kunci) if kunci else None
 
 
+def _host():
+    """Alamat project Supabase yang sedang dipakai (untuk diagnosis admin)."""
+    try:
+        return re.sub(r"^https?://", "", str(_kredensial()[0])).split("/")[0]
+    except Exception:
+        return "(secrets belum terbaca)"
+
+
 def _mode_edit():
     return bool(st.session_state.get("is_admin")) and bool(
         st.session_state.get("show_admin_panel")
@@ -359,13 +367,16 @@ def tampilkan_pembelajaran(menu_variabel, ind):
     try:
         topik, materi = _muat_indikator(menu, kunci)
     except Exception as e:
-        if st.session_state.get("is_admin"):
-            st.warning(
-                "Pembelajaran Susenas belum dapat dimuat. Pastikan susenas_schema.sql "
-                "(termasuk kolom indikator) sudah dijalankan di Supabase."
-            )
-            with st.expander("Detail teknis"):
-                st.code(str(e))
+        with st.expander("🎓 Pembelajaran Olah Susenas"):
+            st.caption("Materi belum dapat dimuat saat ini. Silakan coba lagi nanti.")
+            if st.session_state.get("is_admin"):
+                st.warning(
+                    "Info admin: materi Susenas gagal dimuat. Penyebab yang umum: tabel atau kolom "
+                    "belum dibuat di Supabase (jalankan 02_tambah_kolom_indikator.sql), atau secrets "
+                    "SUSENAS_* menunjuk ke project yang salah."
+                )
+                st.code(f"{type(e).__name__}: {e}")
+                st.caption(f"Project yang dipakai: {_host()}")
         return
 
     edit = _mode_edit()
@@ -389,6 +400,11 @@ def tampilkan_pembelajaran(menu_variabel, ind):
                 _dlg_materi(menu, kunci, nama, topik[0]["id"] if topik else None)
         if not materi:
             st.caption("Belum ada materi untuk indikator ini.")
+            if st.session_state.get("is_admin"):
+                st.caption(
+                    f"🔧 Info admin: menu `{menu}` · kunci indikator `{kunci}` · "
+                    f"topik tertaut: {len(topik)} · project: {_host()}"
+                )
             return
 
         video = [i for i in materi if i["type"] == "video"]
