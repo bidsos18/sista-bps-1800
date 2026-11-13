@@ -47,11 +47,18 @@ def set_toast(pesan, jenis="sukses"):
 @st.dialog("🔐 Login Admin")
 def login_dialog():
 
-    st.write("Silakan masukkan username dan password admin.")
+    st.write(
+        "Silakan masukkan username dan password admin."
+    )
 
+    # Dibungkus form agar menekan Enter di kolom username/password
+    # sama dengan mengklik tombol Login.
     with st.form("form_login_admin", border=False):
 
-        username = st.text_input("Username", key="admin_username_input")
+        username = st.text_input(
+            "Username",
+            key="admin_username_input"
+        )
 
         password = st.text_input(
             "Password",
@@ -61,7 +68,8 @@ def login_dialog():
 
         kirim = st.form_submit_button(
             "🔐 Login",
-            use_container_width=True,
+            key="admin_login_submit",
+            width="stretch",
             type="primary"
         )
 
@@ -74,13 +82,22 @@ def login_dialog():
         ):
 
             st.session_state["is_admin"] = True
+
             st.session_state["show_admin_panel"] = False
+
+            st.success(
+                "Login berhasil."
+            )
+
             st.rerun()
 
         else:
 
-            st.error("❌ Username atau password salah.")
-            
+            st.error(
+                "❌ Username atau password salah."
+            )
+
+
 # ============================================================
 # POPUP AKSES ADMIN
 # ============================================================

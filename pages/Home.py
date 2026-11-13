@@ -42,7 +42,7 @@ st.markdown(
        ======================================================== */
     .sista-hero {
         position: relative;
-        margin-top: -50px;
+        margin-top: -80px;
         overflow: hidden;
         min-height: 360px;
         padding: 25px 60px;
@@ -505,6 +505,14 @@ kategori = [
         "page": "Perumahan",
         "color_main": "#0067b9",
         "color_bg": "#edf5fc"
+    },
+    {
+        "icon": "icon-etc.png",
+        "nama": "Lainnya",
+        "deskripsi": "Indikator statistik sosial lainnya.",
+        "page": "Statistik_Sosial_Lainnya",
+        "color_main": "#0067b9",
+        "color_bg": "#edf5fc"
     }
 ]
 
@@ -516,7 +524,13 @@ kategori = [
 cols = st.columns(3, gap="medium")
 
 for index, item in enumerate(kategori):
-    with cols[index % 3]:
+    # Kartu terakhir yang sendirian di baris terakhir diletakkan di kolom tengah
+    if len(kategori) % 3 == 1 and index == len(kategori) - 1:
+        kolom_kartu = 1
+    else:
+        kolom_kartu = index % 3
+
+    with cols[kolom_kartu]:
         
         # Mengecek apakah ikonnya berupa file gambar (.png / .jpg) atau emoji
         if item["icon"].endswith(".png") or item["icon"].endswith(".jpg"):
@@ -585,7 +599,7 @@ col1, col2, col3 = st.columns(3, gap="medium")
 # 1. SISTA DALAM ANGKA
 with col1:
     st.html(
-        """
+        f"""
         <div class="number-card">
             <div class="number-title">📊 SISTA dalam Angka</div>
             <div class="number-wrapper">
@@ -594,7 +608,7 @@ with col1:
                     <div class="number-label">Kabupaten/<br>Kota</div>
                 </div>
                 <div>
-                    <div class="number-value">6</div>
+                    <div class="number-value">{len(kategori)}</div>
                     <div class="number-label">Bidang Statistik<br>Sosial</div>
                 </div>
                 <div>
@@ -659,5 +673,4 @@ with col3:
 
 
 # 1. Panggil gambar logo BPS (pastikan nama file sesuai dengan yang Anda miliki, misalnya "logo-bps.png")
-logo_bps = baca_gambar("logo_bps.png") 
-
+logo_bps = baca_gambar("logo_bps.png")
