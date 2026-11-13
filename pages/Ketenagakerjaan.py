@@ -12,10 +12,6 @@ jalankan_menu({
     "desimal": 3,
     "sumber_default": SUMBER,
 
-    # Indikator bawaan: angkanya tetap di tabel masing-masing.
-    # Konsep, definisi, rumus, dan seterusnya dapat diisi admin lewat
-    # Edit Data/Indikator (tersimpan di tabel statistik_variabel).
-    # Tabel yang punya kolom `kategori` dikenali otomatis.
     "indikator_bawaan": [
         {
             "tabel": "angkatan_kerja",

@@ -649,12 +649,9 @@ with col3:
     )
     
     daftar_wilayah = [
-        "Semua Kabupaten/Kota", "Bandar Lampung", "Metro", 
-        "Lampung Barat", "Lampung Selatan", "Lampung Tengah", 
-        "Lampung Timur", "Lampung Utara", "Mesuji", 
-        "Pesawaran", "Pesisir Barat", "Pringsewu", 
-        "Tanggamus", "Tulang Bawang", "Tulang Bawang Barat", 
-        "Way Kanan"
+        "Semua Kabupaten/Kota", "Lampung Barat", "Tanggamus", "Lampung Selatan", "Lampung Timur",
+        "Lampung Tengah", "Lampung Utara", "Way Kanan", "Tulang Bawang", "Pesawaran",
+        "Pringsewu", "Mesuji", "Tulang Bawang Barat", "Pesisir Barat", "Bandar Lampung", "Metro", "Provinsi Lampung"
     ]
 
     wilayah = st.selectbox(

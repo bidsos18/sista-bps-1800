@@ -15,9 +15,10 @@ PROV = "Provinsi Lampung"
 SEMUA = "Semua Kabupaten/Kota"
 
 DAFTAR_KABKOTA = [
-    "Bandar Lampung", "Metro", "Lampung Barat", "Lampung Selatan", "Lampung Tengah",
-    "Lampung Timur", "Lampung Utara", "Mesuji", "Pesawaran", "Pesisir Barat",
-    "Pringsewu", "Tanggamus", "Tulang Bawang", "Tulang Bawang Barat", "Way Kanan",
+    "Lampung Barat", "Tanggamus", "Lampung Selatan", "Lampung Timur",
+    "Lampung Tengah", "Lampung Utara", "Way Kanan", "Tulang Bawang", "Pesawaran",
+    "Pringsewu", "Mesuji", "Tulang Bawang Barat", "Pesisir Barat", "Bandar Lampung", 
+    "Metro"
 ]
 
 # Koreksi ejaan nama yang berbeda antar tabel (setelah di-title-case)
