@@ -5,7 +5,7 @@ SUMBER = "Badan Pusat Statistik (BPS)."
 jalankan_menu({
     "menu": "Pengeluaran Makanan",
     "prefix": "pengeluaran",
-    "judul": "🍚 Pengeluaran Perkapita untuk Makanan",
+    "judul": "🍚 Pengeluaran Makanan",
     "breadcrumb": "Statistik Sosial - Pengeluaran Makanan",
     "nama_menu": "Pengeluaran Makanan",
     "tahun_menurun": True,
@@ -19,7 +19,7 @@ jalankan_menu({
     "indikator_bawaan": [
         {
             "tabel": "pengeluaran_makanan",
-            "nama": "Pengeluaran Perkapita untuk Makanan",
+            "nama": "Pengeluaran Makanan",
             "satuan": "Persen (%)",
             "sumber_data": SUMBER,
             "kolom_kategori": {

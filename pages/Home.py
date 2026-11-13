@@ -42,7 +42,7 @@ st.markdown(
        ======================================================== */
     .sista-hero {
         position: relative;
-        margin-top: -80px;
+        margin-top: -50px;
         overflow: hidden;
         min-height: 360px;
         padding: 25px 60px;
@@ -661,31 +661,3 @@ with col3:
 # 1. Panggil gambar logo BPS (pastikan nama file sesuai dengan yang Anda miliki, misalnya "logo-bps.png")
 logo_bps = baca_gambar("logo_bps.png") 
 
-# 2. Tampilkan Footer (perhatikan penambahan tag <img> dan style flex di div sebelah kiri)
-st.html(
-    f"""
-    <div class="home-footer">
-        
-        <!-- Bagian Kiri: Logo dan Teks -->
-        <div style="display: flex; align-items: center; gap: 15px;">
-            
-            <!-- Gambar Logo BPS -->
-            <img src="{logo_bps}" style="height: 45px; width: auto; object-fit: contain;" alt="Logo BPS">
-            
-            <!-- Teks BPS -->
-            <div>
-                <div class="footer-main">BADAN PUSAT STATISTIK</div>
-                <div class="footer-sub">PROVINSI LAMPUNG</div>
-            </div>
-            
-        </div>
-
-        <!-- Bagian Kanan: Copyright -->
-        <div class="footer-right">
-            © 2026 Badan Pusat Statistik Provinsi Lampung<br>
-            Sumber Data: Badan Pusat Statistik
-        </div>
-
-    </div>
-    """
-)

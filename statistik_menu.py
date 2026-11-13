@@ -20,6 +20,7 @@ import streamlit as st
 from supabase import create_client, Client
 
 from utils import load_css, admin_edit_button, set_toast, buat_template_excel
+from materi_susenas import tampilkan_pembelajaran
 
 # ============================================================
 # NAMA TABEL
@@ -775,6 +776,7 @@ def jalankan_menu(cfg):
                 "Belum ada data untuk indikator ini. "
                 "Admin dapat menambahkannya melalui tombol **Edit**."
             )
+            tampilkan_pembelajaran(MENU, ind)
             return
 
         # --------------------------------------------------------
@@ -935,6 +937,11 @@ def jalankan_menu(cfg):
                 + (", ".join(daftar_kat_final) if kat_final_ada else "Tidak memiliki kategori")
                 + "  "
             )
+
+        # --------------------------------------------------------
+        # PEMBELAJARAN OLAH SUSENAS (dropdown di bawah metadata)
+        # --------------------------------------------------------
+        tampilkan_pembelajaran(MENU, ind_final)
 
         # --------------------------------------------------------
         # DOWNLOAD EXCEL

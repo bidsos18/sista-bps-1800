@@ -1,6 +1,3 @@
-/* ============================================================
-   DASAR APLIKASI & RESET
-   ============================================================ */
 :root {
     --sista-primary: #0067b9;
     --sista-primary-hover: #005a9f;
@@ -13,7 +10,6 @@
     --sista-accent: #f39a20;
     --sista-success: #5aa832;
 }
-
 html,
 body,
 [data-testid="stAppViewContainer"],
@@ -22,11 +18,9 @@ body,
     color: var(--sista-heading);
     background-color: var(--sista-background);
 }
-
 .stApp {
     overflow-x: clip;
 }
-
 .stApp h1,
 .stApp h2,
 .stApp h3,
@@ -68,9 +62,6 @@ header[data-testid="stHeader"] > div {
     display: none !important;
 }
 
-/* ============================================================
-   AREA KONTEN UTAMA
-   ============================================================ */
 .block-container {
     width: 100% !important;
     max-width: 1280px !important;
@@ -84,9 +75,6 @@ header[data-testid="stHeader"] > div {
     z-index: auto;
 }
 
-/* ============================================================
-   HEADER STICKY BPS
-   ============================================================ */
 .st-key-sista_sticky_header {
     position: fixed !important;
     top: 0 !important;
@@ -106,11 +94,6 @@ header[data-testid="stHeader"] > div {
     padding: 0px 40px 10px 40px !important;
 }
 
-/*
-   Jangan menonaktifkan pointer-events pada induk navbar. Streamlit dapat
-   mengubah pembungkus DOM antarrilis dan browser; menonaktifkan induknya
-   membuat sebagian kontrol turunannya tidak menerima klik di deployment.
-*/
 .st-key-sista_sticky_header
 > [data-testid="stLayoutWrapper"] {
     width: 100% !important;
@@ -126,7 +109,6 @@ header[data-testid="stHeader"] > div {
     touch-action: manipulation;
 }
 
-/* Samakan perilaku klik mouse dan sentuhan pada seluruh kontrol aplikasi. */
 .stApp a[href],
 .stApp button:not(:disabled),
 .stApp summary,
@@ -143,7 +125,6 @@ header[data-testid="stHeader"] > div {
     align-items: center !important;
 }
 
-/* Identitas Brand BPS */
 .bps-name {
     color: #ffffff !important;
     font-size: 20px;
@@ -163,9 +144,6 @@ header[data-testid="stHeader"] > div {
     white-space: nowrap;
 }
 
-/* ============================================================
-   MENU NAVIGASI TEKS (Beranda, Dashboard, Dokumen)
-   ============================================================ */
 .st-key-sista_sticky_header a[data-testid="stPageLink-NavLink"] {
     color: #ffffff !important;
     background: transparent !important;
@@ -195,7 +173,6 @@ header[data-testid="stHeader"] > div {
     background-color: rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Indikator Garis Bawah Menu Aktif */
 .st-key-sista_sticky_header a[data-testid="stPageLink-NavLink"][aria-current="page"] {
     background-color: transparent !important;
     border-radius: 0 !important;
@@ -212,9 +189,6 @@ header[data-testid="stHeader"] > div {
     border-radius: 3px 3px 0 0;
 }
 
-/* ============================================================
-   SEMUA POPOVER LAINNYA (Termasuk Statistik Sosial) -> TRANSPARAN
-   ============================================================ */
 .st-key-sista_sticky_header button[data-testid="stPopoverButton"] {
     background: transparent !important;
     color: #ffffff !important;
@@ -242,31 +216,6 @@ header[data-testid="stHeader"] > div {
     background-color: rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Statistik Sosial adalah menu navigasi, bukan tombol aksi putih. */
-.st-key-statistik_sosial_menu button[data-testid="stPopoverButton"] {
-    color: #ffffff !important;
-    background-color: transparent !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
-}
-
-.st-key-statistik_sosial_menu button[data-testid="stPopoverButton"] * {
-    color: #ffffff !important;
-}
-
-.st-key-statistik_sosial_menu button[data-testid="stPopoverButton"]:hover,
-.st-key-statistik_sosial_menu button[data-testid="stPopoverButton"][aria-expanded="true"],
-.st-key-statistik_sosial_menu:has(.statistik-sosial-active)
-button[data-testid="stPopoverButton"] {
-    color: #ffffff !important;
-    background-color: rgba(255, 255, 255, 0.12) !important;
-    border-color: transparent !important;
-}
-
-
-/* ============================================================
-   TOMBOL UTAMA: LOGIN ADMIN (TRANSPARAN SEPERTI MENU LAINNYA)
-   ============================================================ */
 .st-key-sista_sticky_header button[kind="primary"] {
     background-color: transparent !important;
     color: #ffffff !important;
@@ -303,7 +252,6 @@ button[data-testid="stPopoverButton"] {
     cursor: pointer !important;
 }
 
-/* Hilangkan gap dari slot aksi agar Login/Logout sejajar dengan menu lain. */
 @media (min-width: 1000px) {
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
@@ -324,17 +272,11 @@ button[data-testid="stPopoverButton"] {
     }
 }
 
-/*
-   Enam menu utama dan tombol Login/Logout memakai ukuran yang sama.
-   Laptop memakai lebar 100 px, sedangkan desktop lebar memakai 132 px.
-   Area hitbox setinggi 88 px tetap dipertahankan.
-*/
 @media (min-width: 1000px) {
     .st-key-sista_sticky_header {
         --sista-nav-control-width: 100px;
         --sista-nav-menu-width: 620px;
     }
-
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"] {
@@ -346,7 +288,6 @@ button[data-testid="stPopoverButton"] {
         align-items: center !important;
         gap: 16px !important;
     }
-
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"]
@@ -357,7 +298,6 @@ button[data-testid="stPopoverButton"] {
         margin-bottom: 0 !important;
         flex: none !important;
     }
-
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"]
@@ -370,8 +310,6 @@ button[data-testid="stPopoverButton"] {
         gap: 4px !important;
         width: var(--sista-nav-menu-width) !important;
     }
-
-    /* Kolom menu navigasi: 4 menu pertama setinggi 88px, sedangkan kolom 5 (Search) dan 6 (Lokasi) setinggi 40px sejajar dengan Login Admin */
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"]
@@ -384,7 +322,6 @@ button[data-testid="stPopoverButton"] {
         margin: 0 !important;
         flex: none !important;
     }
-
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"]
@@ -430,7 +367,6 @@ button[data-testid="stPopoverButton"] {
         box-sizing: border-box !important;
     }
 
-    /* Kolom 5 & 6 (Search & Lokasi) memiliki tinggi dan hitbox yang sama persis dengan Login Admin (40px, bukan 88px) */
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"]
@@ -486,7 +422,6 @@ button[data-testid="stPopoverButton"] {
         box-sizing: border-box !important;
     }
 
-    /* Tombol login/logout berukuran sama persis dengan tombol search & lokasi */
     .st-key-header_login_button,
     .st-key-header_logout,
     .st-key-header_login_button button,
@@ -510,22 +445,6 @@ button[data-testid="stPopoverButton"] {
     }
 }
 
-/* ============================================================
-   ELEMEN DEKORATIF
-   ============================================================ */
-.header-line {
-    width: 100%;
-    height: 2px;
-    background-color: #ffffff;
-    opacity: 0.35;
-    margin-top: 10px;
-    margin-bottom: 35px;
-    pointer-events: none;
-}
-
-/* ============================================================
-   KOTAK DROPDOWN POPOVER & ITEM SUBMENU
-   ============================================================ */
 div[data-testid="stPopoverBody"] {
     border-radius: 12px !important;
     box-sizing: border-box !important;
@@ -554,7 +473,6 @@ div[data-testid="stPopoverBody"] input::placeholder {
     opacity: 1 !important;
 }
 
-/* Selectbox React Aria pada popover harus tetap mengikuti tema terang SISTA. */
 div[data-testid="stPopoverBody"] [data-testid="stSelectbox"] [role="group"] {
     color: #17365d !important;
     background-color: #ffffff !important;
@@ -580,7 +498,6 @@ div[data-testid="stPopoverBody"] [data-testid="stMarkdownContainer"] p {
     color: #17365d !important;
 }
 
-/* Tombol pencarian dan wilayah pada navbar desktop — ukuran dan gaya sama persis dengan Login Admin. */
 .st-key-sista_sticky_header .st-key-desktop_search_button,
 .st-key-sista_sticky_header .st-key-desktop_location_button,
 .st-key-sista_sticky_header .st-key-desktop_search_button [data-testid="stPopover"],
@@ -627,7 +544,6 @@ div[data-testid="stPopoverBody"] [data-testid="stMarkdownContainer"] p {
     border-color: rgba(255, 255, 255, 0.7) !important;
 }
 
-/* Menu opsi selectbox menggunakan tema terang. Portal ini berada di luar popover. */
 [data-testid="stSelectboxVirtualDropdown"] {
     color: #17365d !important;
     background-color: #ffffff !important;
@@ -715,15 +631,11 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
     gap: 3px !important;
 }
 
-/* Elemen navigasi mobile hanya diaktifkan melalui media query smartphone. */
 .st-key-mobile_header_actions,
 .st-key-mobile_nav_overlay {
     display: none !important;
 }
 
-/* ============================================================
-   RESPONSIVE (LAYAR KECIL)
-   ============================================================ */
 @media (max-width: 1100px) {
     .st-key-sista_sticky_header {
         padding: 12px 20px 20px 20px !important;
@@ -756,9 +668,7 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
     }
 }
 
-/* ============================================================
-   TABLET & SMARTPHONE: HEADER DUA BARIS
-   ============================================================ */
+/*Tablet & Smartphone*/
 @media (max-width: 999px) {
     .st-key-sista_sticky_header {
         padding: 10px 16px 12px !important;
@@ -772,7 +682,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         margin-top: 0 !important;
     }
 
-    /* Baris 1: identitas + login, baris 2: seluruh navigasi. */
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"] {
@@ -816,7 +725,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         align-self: center;
     }
 
-    /* Identitas BPS tetap sejajar dan tidak ikut ditumpuk Streamlit. */
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"]
@@ -836,7 +744,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         flex: 0 0 auto !important;
     }
 
-    /* Navigasi tetap satu baris dan dapat digeser pada layar sangat sempit. */
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"]
@@ -875,7 +782,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         white-space: nowrap !important;
     }
 
-    /* Tombol search, lokasi & login/logout lebih kecil di tablet (40px). */
     .st-key-sista_sticky_header .st-key-desktop_search_button,
     .st-key-sista_sticky_header .st-key-desktop_location_button,
     .st-key-sista_sticky_header .st-key-desktop_search_button [data-testid="stPopover"],
@@ -925,9 +831,7 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
     }
 }
 
-/* ============================================================
-   SMARTPHONE / MOBILE (LAYAR KECIL <= 768px)
-   ============================================================ */
+/*SMARTPHONE / MOBILE (LAYAR KECIL <= 768px)*/
 @media (max-width: 768px) {
     .st-key-sista_sticky_header {
         padding: 8px 12px 10px !important;
@@ -940,7 +844,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         padding-bottom: 36px !important;
     }
 
-    /* Header baris tunggal di mobile: Brand di kiri, tombol aksi di kanan */
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"] {
@@ -964,7 +867,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         overflow: visible !important;
     }
 
-    /* Navbar desktop disembunyikan dan diganti tombol hamburger di mobile */
     .st-key-sista_sticky_header
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"]
@@ -1012,7 +914,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         padding: 0 !important;
     }
 
-    /* Container aksi mobile: 2 tombol (Cari & Menu Hamburger) berdampingan rapi & sejajar sempurna */
     .st-key-mobile_header_actions {
         display: inline-flex !important;
         flex-direction: row !important;
@@ -1034,7 +935,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         padding: 0 !important;
     }
 
-    /* Semua wrapper tombol pencarian dan menu hamburger memiliki tinggi, margin, dan posisi sejajar */
     .st-key-mobile_header_actions > div,
     .st-key-mobile_header_actions [data-testid="stColumn"],
     .st-key-mobile_header_actions [data-testid="stElementContainer"],
@@ -1060,7 +960,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         vertical-align: middle !important;
     }
 
-    /* Hitbox kedua tombol mobile presisi sejajar (42x40px), bergaris tepi dan mudah ditekan */
     .st-key-mobile_search_button button,
     .st-key-mobile_menu_open button {
         width: 42px !important;
@@ -1102,7 +1001,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         display: none !important;
     }
 
-    /* Pastikan event sentuhan/klik langsung mengenai elemen button, bukan tertelan oleh icon span di dalamnya */
     .st-key-mobile_search_button button *,
     .st-key-mobile_menu_open button * {
         pointer-events: none !important;
@@ -1111,12 +1009,10 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         line-height: 1 !important;
     }
 
-    /* Sembunyikan panah dropdown popover agar hanya ikon kaca pembesar yang tampil */
     .st-key-mobile_search_button button svg:not([data-testid="stIconMaterial"]) {
         display: none !important;
     }
 
-    /* Lapisan gelap dan panel navigasi dari kanan. */
     .st-key-mobile_nav_overlay {
         display: block !important;
         position: fixed !important;
@@ -1176,7 +1072,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         }
     }
 
-    /* Baris brand dan tombol tutup tidak boleh ditumpuk. */
     .st-key-mobile_nav_drawer
     > [data-testid="stLayoutWrapper"]
     > [data-testid="stHorizontalBlock"] {
@@ -1293,11 +1188,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         align-items: center !important;
     }
 
-    /*
-       Detail expander harus ikut memperbesar tinggi layout drawer. Tanpa
-       aturan ini, footer wilayah menumpuk di atas item Statistik Sosial dan
-       mengambil alih sentuhan pada perangkat mobile.
-    */
     .st-key-mobile_stats_dropdown details,
     .st-key-mobile_stats_dropdown details[open],
     .st-key-mobile_stats_dropdown [data-testid="stExpanderDetails"] {
@@ -1390,31 +1280,6 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         border-top: 1px solid #dceafa;
     }
 
-    .mobile-location-label {
-        margin-top: 0;
-        margin-left: 1px;
-    }
-
-    .st-key-mobile_header_wilayah [data-baseweb="select"] > div {
-        min-height: 38px !important;
-        height: 38px !important;
-        font-size: 13px !important;
-        color: #17365d !important;
-        background: #ffffff !important;
-        border-color: #d5e3f1 !important;
-        border-radius: 6px !important;
-    }
-
-    .st-key-mobile_header_wilayah div {
-        color: #17365d !important;
-        background-color: #ffffff !important;
-    }
-
-    .st-key-mobile_header_wilayah * {
-        color: #17365d !important;
-    }
-
-    /* Tombol Login/Logout Admin di sidebar mobile diperkecil */
     .st-key-mobile_admin_login button,
     .st-key-mobile_admin_logout button {
         width: 100% !important;
@@ -1498,223 +1363,91 @@ div[data-testid="stPopoverBody"] [data-testid="stVerticalBlock"] {
         max-width: calc(100vw - 24px) !important;
     }
 }
-
-/* ============================================================
-   MEMPERPENDEK TINGGI KOTAK BANNER UTAMA
-   ============================================================ */
-/* Sesuaikan class atau elemen pembungkus banner utama Anda */
-.stApp [data-testid="stVerticalBlock"] > div:has(> div.element-container) style-banner {
-    padding-top: 10px !important;
-    padding-bottom: 20px !important;
-}
-
 .st-key-box_kategori_perumahan,
 .st-key-box_tahun_perumahan,
 .st-key-box_wilayah_perumahan {
     margin-top: -12px;
 }
 
-/* ============================================================
-   TAMBAHAN - INDIKATOR AKTIF STATISTIK SOSIAL
-   ============================================================ */
-
-/*
-   Statistik Sosial dibuat aktif ketika sedang berada di salah satu:
-   - Kemiskinan
-   - Ketenagakerjaan
-   - Pendidikan
-   - Kependudukan
-   - Pengeluaran Makanan
-   - Perumahan
-
-   Container aktif dan normal dibuat memiliki ukuran yang sama
-   agar posisi navbar tidak bergeser.
-*/
-
-
-/* ------------------------------------------------------------
-   CONTAINER STATISTIK SOSIAL AKTIF
-   ------------------------------------------------------------ */
-
 .st-key-statistik_sosial_aktif {
     position: relative !important;
-
     width: 100% !important;
-
     margin: 0 !important;
     padding: 0 !important;
-
     box-sizing: border-box !important;
 }
-
-
-/* ------------------------------------------------------------
-   TOMBOL STATISTIK SOSIAL SAAT AKTIF
-   ------------------------------------------------------------ */
 
 .st-key-statistik_sosial_aktif
 button[data-testid="stPopoverButton"] {
-
     position: relative !important;
-
     background: transparent !important;
-
     color: #ffffff !important;
-
     border: none !important;
-
     box-shadow: none !important;
-
     border-radius: 7px !important;
-
     min-height: 38px !important;
-
     padding: 9px 10px !important;
-
     font-size: 13px !important;
-
     font-weight: 700 !important;
-
     box-sizing: border-box !important;
 }
-
-
-/* teks + icon */
 
 .st-key-statistik_sosial_aktif
 button[data-testid="stPopoverButton"] * {
     color: #ffffff !important;
 }
 
-
-/* ------------------------------------------------------------
-   HOVER STATISTIK SOSIAL AKTIF
-   ------------------------------------------------------------ */
-
 .st-key-statistik_sosial_aktif
 button[data-testid="stPopoverButton"]:hover {
-
     background-color: rgba(255, 255, 255, 0.12) !important;
 }
 
-
-/* ------------------------------------------------------------
-   GARIS PENANDA AKTIF
-   ------------------------------------------------------------ */
-
 .st-key-statistik_sosial_aktif
 button[data-testid="stPopoverButton"]::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 10px;
-    right: 10px;
-
-    bottom: 0;
-
-    height: 3px;
-
-    background-color: #ffffff;
-
-    border-radius: 3px 3px 0 0;
-
-    pointer-events: none !important;
+    content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 3px; background-color: #ffffff; border-radius: 3px 3px 0 0; pointer-events: none !important;
 }
-
-
-/* ============================================================
-   STATISTIK SOSIAL NORMAL
-   ============================================================ */
 
 .st-key-statistik_sosial_normal {
-
     position: relative !important;
-
     width: 100% !important;
-
     margin: 0 !important;
     padding: 0 !important;
-
     box-sizing: border-box !important;
 }
-
-
-/* Pastikan ukuran tombol normal sama dengan tombol aktif */
 
 .st-key-statistik_sosial_normal
 button[data-testid="stPopoverButton"] {
-
     min-height: 38px !important;
-
     padding: 9px 10px !important;
-
     box-sizing: border-box !important;
 }
 
-
-/* ============================================================
-   PENTING:
-   JANGAN BIARKAN CONTAINER AKTIF MENAMBAH TINGGI
-   ============================================================ */
-
 .st-key-statistik_sosial_aktif
 [data-testid="stVerticalBlock"] {
-
     gap: 0 !important;
 }
 
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
 @media (max-width: 1100px) {
-
     .st-key-statistik_sosial_aktif
     button[data-testid="stPopoverButton"],
     .st-key-statistik_sosial_normal
     button[data-testid="stPopoverButton"] {
-
         font-size: 11px !important;
-
         padding: 8px 6px !important;
-
         min-height: 38px !important;
     }
-
-
     .st-key-statistik_sosial_aktif
     button[data-testid="stPopoverButton"]::after {
-
-        left: 6px;
-        right: 6px;
+        left: 6px; right: 6px;
     }
 }
 
-
-/* ============================================================
-   MOBILE
-   ============================================================ */
-
 @media (max-width: 999px) {
-
-    /*
-       Navbar desktop memang disembunyikan oleh CSS yang sudah ada.
-       Jadi indikator ini tidak perlu ditampilkan di mobile.
-    */
-
     .st-key-statistik_sosial_aktif,
     .st-key-statistik_sosial_normal {
-
         display: none !important;
     }
 }
-
-/* ============================================================
-   GARIS BAWAH BERANDA
-   ============================================================ */
 
 .st-key-beranda_aktif {
     position: relative !important;
@@ -1738,11 +1471,6 @@ a[data-testid="stPageLink-NavLink"]::after {
     pointer-events: none !important;
 }
 
-
-/* ============================================================
-   GARIS BAWAH DASHBOARD
-   ============================================================ */
-
 .st-key-dashboard_aktif {
     position: relative !important;
 }
@@ -1764,11 +1492,6 @@ a[data-testid="stPageLink-NavLink"]::after {
     border-radius: 3px 3px 0 0 !important;
     pointer-events: none !important;
 }
-
-
-/* ============================================================
-   GARIS BAWAH DOKUMEN
-   ============================================================ */
 
 .st-key-dokumen_aktif {
     position: relative !important;
@@ -1792,7 +1515,29 @@ a[data-testid="stPageLink-NavLink"]::after {
     pointer-events: none !important;
 }
 
-/* Popover panduan dibuat lebih lebar agar nyaman dibaca */
 div[data-testid="stPopoverBody"]:has(.panduan-lebar) {
     width: 380px !important;
+}
+
+.sista-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100vw;
+    margin: 56px 0 -60px calc(50% - 50vw);
+    padding: 12px 40px;
+    box-sizing: border-box;
+    background: #0067b9;
+    color: #ffffff;
+}
+.sista-footer, .sista-footer * { font-size: 8pt !important; line-height: 1.35 !important; }
+.sista-footer p { margin: 0; color: rgba(255, 255, 255, 0.88); }
+.sista-footer .sf-judul { font-weight: 700; color: #ffffff; }
+.sista-footer .sf-kiri .sf-judul:not(:first-child) { margin-top: 3px; }
+.sf-kanan { text-align: right; flex-shrink: 0; }
+
+@media (max-width: 999px) {
+    .sista-footer { flex-direction: column; align-items: center; text-align: center; padding: 14px 16px; }
+    .sf-kanan { text-align: center; }
 }

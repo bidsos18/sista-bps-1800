@@ -1,5 +1,9 @@
 import os
 import streamlit as st
+import base64
+import ast
+from pathlib import Path
+from supabase import create_client
 from utils import (
     load_css,
     login_dialog,
@@ -96,14 +100,8 @@ perumahan = st.Page(
 
 statistik_lainnya = st.Page(
     "pages/Statistik_Sosial_Lainnya.py",
-    title="Statistik Sosial Lainnya",
+    title="Lainnya",
     icon=":material/category:"
-)
-
-upload = st.Page(
-    "pages/Upload.py",
-    title="Upload",
-    icon=":material/upload:"
 )
 
 # ============================================================
@@ -120,8 +118,7 @@ pg = st.navigation(
         penduduk,
         pengeluaran,
         perumahan,
-        statistik_lainnya,
-        upload
+        statistik_lainnya
     ],
     position="hidden"
 )
@@ -184,7 +181,109 @@ HALAMAN_CARI = {
     ),
 }
 
-PANDUAN_FILE = "panduan_sista.pdf"
+PANDUAN_FILE = "panduan.pdf"
+
+
+# ============================================================
+# DATA PENCARIAN INDIKATOR
+# ============================================================
+# Pencarian juga mencari NAMA INDIKATOR (bawaan di file halaman + yang ditambah
+# admin di database), bukan hanya halaman. Tidak perlu menambah kata kunci manual.
+# Format: (halaman, file halaman)
+
+HALAMAN_INDIKATOR = [
+    (kemiskinan, "pages/Kemiskinan.py"),
+    (ketenagakerjaan, "pages/Ketenagakerjaan.py"),
+    (pendidikan, "pages/Pendidikan.py"),
+    (penduduk, "pages/Penduduk.py"),
+    (pengeluaran, "pages/Pengeluaran_Makanan.py"),
+    (perumahan, "pages/Perumahan.py"),
+    (statistik_lainnya, "pages/Statistik_Sosial_Lainnya.py"),
+]
+
+MAKS_HASIL_INDIKATOR = 10
+
+
+@st.cache_data(show_spinner=False)
+def _baca_halaman_indikator(file):
+    """Baca menu, prefix, dan indikator bawaan dari file halaman TANPA menjalankannya.
+
+    Mengembalikan (menu, prefix, [(nama, tabel), ...]) atau None bila gagal dibaca.
+    """
+    try:
+        tree = ast.parse((Path(__file__).parent / file).read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.Call) and node.args and isinstance(node.args[0], ast.Dict)):
+            continue
+        cfg = {
+            k.value: v for k, v in zip(node.args[0].keys, node.args[0].values)
+            if isinstance(k, ast.Constant)
+        }
+        if not (isinstance(cfg.get("menu"), ast.Constant) and isinstance(cfg.get("prefix"), ast.Constant)):
+            continue
+
+        bawaan = []
+        if isinstance(cfg.get("indikator_bawaan"), ast.List):
+            for el in cfg["indikator_bawaan"].elts:
+                if not isinstance(el, ast.Dict):
+                    continue
+                kv = {
+                    k.value: v.value for k, v in zip(el.keys, el.values)
+                    if isinstance(k, ast.Constant) and isinstance(v, ast.Constant)
+                }
+                if "nama" in kv and "tabel" in kv:
+                    bawaan.append((kv["nama"], kv["tabel"]))
+        return cfg["menu"].value, cfg["prefix"].value, bawaan
+    return None
+
+
+@st.cache_data(ttl=60, show_spinner=False)
+def _indikator_dari_database():
+    try:
+        sb = create_client(st.secrets["SUPABASE_URL"], st.secrets["SUPABASE_KEY"])
+        return (
+            sb.table("statistik_variabel")
+            .select("id,nama_indikator,menu_variabel,nama_tabel_lama")
+            .execute().data
+            or []
+        )
+    except Exception:
+        return []
+
+
+def daftar_indikator():
+    """Semua indikator beserta halaman tujuannya (aturan penggabungan sama dengan statistik_menu.py)."""
+    baris_db = _indikator_dari_database()
+    hasil = []
+
+    for halaman, file in HALAMAN_INDIKATOR:
+        info = _baca_halaman_indikator(file)
+        if not info:
+            continue
+        menu, prefix, bawaan = info
+        milik_menu = [r for r in baris_db if r.get("menu_variabel") == menu]
+        per_tabel = {r["nama_tabel_lama"]: r for r in milik_menu if r.get("nama_tabel_lama")}
+
+        dipakai = set()
+        for nama, tabel in bawaan:
+            dipakai.add(tabel)
+            r = per_tabel.get(tabel) or {}
+            hasil.append({
+                "nama": r.get("nama_indikator") or nama, "menu": menu, "halaman": halaman,
+                "prefix": prefix, "kunci": f"t_{tabel}",
+            })
+
+        for r in milik_menu:
+            if r.get("nama_tabel_lama") in dipakai:
+                continue
+            hasil.append({
+                "nama": r.get("nama_indikator") or "", "menu": menu, "halaman": halaman,
+                "prefix": prefix, "kunci": r["id"],
+            })
+    return hasil
 
 
 # ============================================================
@@ -194,8 +293,8 @@ PANDUAN_FILE = "panduan_sista.pdf"
 def panel_pencarian(prefix):
 
     q = st.text_input(
-        "Cari halaman",
-        placeholder="mis. miskin, sekolah, rumah",
+        "Cari halaman atau indikator",
+        placeholder="mis. miskin, amh, rumah",
         key=f"{prefix}_q"
     ).strip().lower()
 
@@ -205,6 +304,13 @@ def panel_pencarian(prefix):
 
     kata_dicari = q.split()
 
+    # Indikator: semua kata harus ada pada nama indikator atau nama menunya
+    cocok_indikator = [
+        i for i in daftar_indikator()
+        if all(k in f"{i['nama']} {i['menu']}".lower() for k in kata_dicari)
+    ]
+
+    # Halaman: salah satu kata cocok dengan nama atau kata kunci halaman
     cocok = []
 
     for nama, (halaman, kata_kunci) in HALAMAN_CARI.items():
@@ -214,6 +320,25 @@ def panel_pencarian(prefix):
         if any(k in teks for k in kata_dicari):
             cocok.append((nama, halaman))
 
+    if cocok_indikator:
+
+        st.caption("Indikator yang cocok:")
+
+        for i in cocok_indikator[:MAKS_HASIL_INDIKATOR]:
+            label = f"{i['nama']} · {i['menu']}".replace("*", "\\*").replace("_", "\\_")
+            if st.button(
+                label,
+                key=f"{prefix}_ind_{i['prefix']}_{i['kunci']}",
+                width="stretch"
+            ):
+                # Pilih indikator ini di dropdown halaman tujuan, lalu pindah halaman
+                st.session_state[f"indikator_{i['prefix']}"] = i["kunci"]
+                st.switch_page(i["halaman"])
+
+        sisa = len(cocok_indikator) - MAKS_HASIL_INDIKATOR
+        if sisa > 0:
+            st.caption(f"…dan {sisa} indikator lain. Perpanjang kata kunci untuk menyempitkan.")
+
     if cocok:
 
         st.caption("Halaman yang cocok:")
@@ -221,10 +346,10 @@ def panel_pencarian(prefix):
         for nama, halaman in cocok:
             st.page_link(halaman, label=nama)
 
-    else:
+    if not cocok_indikator and not cocok:
 
         st.caption(
-            "Tidak ada halaman yang cocok. "
+            "Tidak ada halaman atau indikator yang cocok. "
             "Coba kata lain, misalnya: miskin, sekolah, rumah."
         )
 
@@ -319,7 +444,7 @@ def link_statistik_sosial():
 
     st.page_link(
         statistik_lainnya,
-        label="Statistik Sosial Lainnya",
+        label="Lainnya",
         icon=":material/category:"
     )
 
@@ -788,19 +913,29 @@ if st.session_state["mobile_nav_open"]:
 if st.session_state.pop("mobile_login_requested", False):
     login_dialog()
 
-
-# ============================================================
-# PEMBATAS HEADER
-# ============================================================
-
-st.markdown(
-    '<div class="header-line"></div>',
-    unsafe_allow_html=True
-)
-
-
 # ============================================================
 # JALANKAN HALAMAN
 # ============================================================
 
 pg.run()
+
+@st.cache_data
+def logo_base64():
+    return base64.b64encode(Path("logo_bps.png").read_bytes()).decode()
+
+st.html(f"""
+<div class="sista-footer">
+<div class="sf-kiri">
+<p class="sf-judul">Dikompilasi oleh Tim Sosial BPS Provinsi Lampung</p>
+<p>Produksi Video oleh Dhani Arief Hartanto</p>
+<p class="sf-judul">Tim Penyusun</p>
+<p>Febiyana Qomariyah, Ranggi Aditya Nugraha, Reny Andriati, Anisa Fitri</p>
+<p class="sf-judul">Pengembang Website</p>
+<p>Anisa Fitri</p>
+</div>
+<div class="sf-kanan">
+<p>© 2026 Badan Pusat Statistik Provinsi Lampung</p>
+<p>Sumber Data: Badan Pusat Statistik</p>
+</div>
+</div>
+""")

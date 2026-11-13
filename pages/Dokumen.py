@@ -144,8 +144,8 @@ if is_admin:
             [
                 "Surat",
                 "Laporan",
-                "Rekap",
-                "Presentasi",
+                "Kuesioner",
+                "Presentasi/Materi",
                 "Syntax",
                 "Lainnya"
             ],
@@ -304,7 +304,7 @@ else:
 # 6. MANAJEMEN DOKUMEN
 # =====================================================
 
-st.subheader("📂 Daftar Dokumen")
+st.subheader("Daftar Dokumen")
 
 
 # =====================================================
@@ -319,8 +319,8 @@ with st.form("form_cari_dokumen"):
             "Semua Kategori",
             "Surat",
             "Laporan",
-            "Rekap",
-            "Presentasi",
+            "Kuesioner",
+            "Presentasi/Materi",
             "Syntax",
             "Lainnya"
         ]
