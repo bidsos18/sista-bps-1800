@@ -42,7 +42,7 @@ st.markdown(
        ======================================================== */
     .sista-hero {
         position: relative;
-        margin-top: -80px;
+        margin-top: -50px;
         overflow: hidden;
         min-height: 360px;
         padding: 25px 60px;
